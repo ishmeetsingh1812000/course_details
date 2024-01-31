@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CourseList from "./CourseList";
+import CourseDetails from "./CourseDetails";
+import StudentDashboard from "./StudentDashboard";
 
-function App() {
+export default function App() {
+  const userIDs = ["Alice_Johnson", "Charlie_Brown"];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/courses/:id?" element={<CourseList />} />
+        <Route path="/course-details/:id" element={<CourseDetails />} />
+        {userIDs.map((userId) => (
+          <Route
+            key={userId}
+            path={`/student-dashboard/${userId}`}
+            element={<StudentDashboard userId={userId} />}
+          />
+        ))}
+        <Route path="*" element={<p>Page not found</p>} />
+      </Routes>
+    </Router>
   );
 }
-
-export default App;
